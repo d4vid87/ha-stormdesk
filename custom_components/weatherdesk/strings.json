@@ -1,0 +1,44 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "WeatherDesk",
+        "description": "The address of the dashboard — the same one you open in a browser.",
+        "data": { "host": "Address" }
+      },
+      "confirm": {
+        "title": "WeatherDesk",
+        "description": "Add {name}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Nothing at that address answered as a WeatherDesk. Check the address, and that this is the dashboard's own server rather than a static copy of the page."
+    },
+    "abort": {
+      "already_configured": "This station is already set up.",
+      "cannot_connect": "Nothing at that address answered as a WeatherDesk."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "temp": { "name": "Temperature" },
+      "feels_like": { "name": "Feels like" },
+      "humidity": { "name": "Humidity" },
+      "pressure": { "name": "Pressure" },
+      "pressure_trend": { "name": "Pressure trend" },
+      "wind_avg": { "name": "Wind" },
+      "wind_gust": { "name": "Gust" },
+      "wind_lull": { "name": "Wind lull" },
+      "wind_dir": { "name": "Wind direction" },
+      "uv": { "name": "UV index" },
+      "solar": { "name": "Solar radiation" },
+      "lux": { "name": "Illuminance" },
+      "rain": { "name": "Rain" },
+      "day_rain": { "name": "Rain today" },
+      "strikes": { "name": "Lightning strikes" },
+      "strike_dist": { "name": "Lightning distance" },
+      "battery": { "name": "Battery" }
+    }
+  }
+}
