@@ -1,6 +1,6 @@
-"""WeatherDesk — a local weather station dashboard, on the Home Assistant bus.
+"""StormDesk — a local weather station dashboard, on the Home Assistant bus.
 
-There are two ways to get a WeatherDesk station into Home Assistant, and they answer different
+There are two ways to get a StormDesk station into Home Assistant, and they answer different
 questions. The MQTT route needs a broker but no custom code, and it is what most people already
 have. This integration needs no broker at all: it polls the dashboard's own /api/v1 and adds the
 one thing MQTT discovery cannot express — a weather entity with a forecast, which is what the
@@ -18,13 +18,13 @@ from homeassistant.const import CONF_HOST, Platform
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN, PANEL_URL
-from .coordinator import WeatherDeskCoordinator
+from .coordinator import StormDeskCoordinator
 
 PLATFORMS: list[Platform] = [Platform.SENSOR, Platform.WEATHER]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    coordinator = WeatherDeskCoordinator(hass, entry.data[CONF_HOST])
+    coordinator = StormDeskCoordinator(hass, entry.data[CONF_HOST])
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
@@ -50,7 +50,7 @@ def _add_panel(hass: HomeAssistant, host: str) -> None:
     frontend.async_register_built_in_panel(
         hass,
         "iframe",
-        sidebar_title="WeatherDesk",
+        sidebar_title="StormDesk",
         sidebar_icon="mdi:weather-partly-cloudy",
         frontend_url_path=PANEL_URL,
         config={"url": host},

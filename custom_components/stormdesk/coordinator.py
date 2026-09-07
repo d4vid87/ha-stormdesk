@@ -14,7 +14,7 @@ from .const import API_PATH, DOMAIN, SCAN_INTERVAL
 _LOGGER = logging.getLogger(__name__)
 
 
-class WeatherDeskCoordinator(DataUpdateCoordinator[dict[str, Any]]):
+class StormDeskCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     """One request per interval, shared by the weather entity and every sensor.
 
     A sensor per field polling for itself would be twenty requests a minute at one dashboard,
@@ -42,7 +42,7 @@ class WeatherDeskCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             raise UpdateFailed(f"cannot reach {self.host}") from err
 
         if not isinstance(payload, dict) or "current" not in payload:
-            raise UpdateFailed(f"{self.host} answered something that is not a WeatherDesk")
+            raise UpdateFailed(f"{self.host} answered something that is not a StormDesk")
         return payload
 
     @property
@@ -51,7 +51,7 @@ class WeatherDeskCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     @property
     def station_name(self) -> str:
-        return (self.data or {}).get("station", {}).get("name") or "WeatherDesk"
+        return (self.data or {}).get("station", {}).get("name") or "StormDesk"
 
     def value(self, field: str) -> Any:
         """One reading, or None. A field the station does not measure is null, not missing."""

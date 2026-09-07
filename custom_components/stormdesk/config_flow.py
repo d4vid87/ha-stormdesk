@@ -1,6 +1,6 @@
 """Setup, by discovery or by typing an address.
 
-WeatherDesk announces itself on the LAN as `_weatherdesk._tcp`, so the usual path is Home
+StormDesk announces itself on the LAN as `_stormdesk._tcp`, so the usual path is Home
 Assistant offering it before anyone goes looking for an IP address. The manual path is for a
 dashboard on another subnet, or in a container with host networking off, where mDNS does not
 carry.
@@ -20,7 +20,7 @@ from .const import API_PATH, DOMAIN
 
 
 async def _probe(hass, host: str) -> dict[str, Any] | None:
-    """Is a WeatherDesk actually there? Returns its station block, or None."""
+    """Is a StormDesk actually there? Returns its station block, or None."""
     session = async_get_clientsession(hass)
     try:
         async with session.get(f"{host.rstrip('/')}{API_PATH}", timeout=15) as response:
@@ -34,7 +34,7 @@ async def _probe(hass, host: str) -> dict[str, Any] | None:
     return payload.get("station") or {}
 
 
-class WeatherDeskConfigFlow(ConfigFlow, domain=DOMAIN):
+class StormDeskConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     def __init__(self) -> None:
@@ -56,7 +56,7 @@ class WeatherDeskConfigFlow(ConfigFlow, domain=DOMAIN):
                 await self.async_set_unique_id(str(station.get("id") or host))
                 self._abort_if_unique_id_configured(updates={CONF_HOST: host})
                 return self.async_create_entry(
-                    title=station.get("name") or "WeatherDesk", data={CONF_HOST: host}
+                    title=station.get("name") or "StormDesk", data={CONF_HOST: host}
                 )
 
         return self.async_show_form(
@@ -77,7 +77,7 @@ class WeatherDeskConfigFlow(ConfigFlow, domain=DOMAIN):
         self._abort_if_unique_id_configured(updates={CONF_HOST: host})
 
         self._host = host
-        self._name = station.get("name") or "WeatherDesk"
+        self._name = station.get("name") or "StormDesk"
         # Without this the discovered card in the UI is titled with the domain rather than the
         # station, which is unhelpful in a house with two of them.
         self.context["title_placeholders"] = {"name": self._name}
@@ -88,8 +88,8 @@ class WeatherDeskConfigFlow(ConfigFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         if user_input is not None:
             return self.async_create_entry(
-                title=self._name or "WeatherDesk", data={CONF_HOST: self._host}
+                title=self._name or "StormDesk", data={CONF_HOST: self._host}
             )
         return self.async_show_form(
-            step_id="confirm", description_placeholders={"name": self._name or "WeatherDesk"}
+            step_id="confirm", description_placeholders={"name": self._name or "StormDesk"}
         )
