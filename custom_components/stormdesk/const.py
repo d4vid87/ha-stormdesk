@@ -1,8 +1,8 @@
-"""Constants for the WeatherDesk integration."""
+"""Constants for the StormDesk integration."""
 
 from datetime import timedelta
 
-DOMAIN = "weatherdesk"
+DOMAIN = "stormdesk"
 
 # The dashboard's own versioned endpoint. Everything else its server answers is shaped for its
 # page and free to change with it; this one is a contract.
@@ -15,4 +15,4 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 # The sidebar entry pointing at the dashboard itself. Hide it the way any sidebar item is hidden
 # — long-press the Home Assistant logo — rather than with a setting of our own.
-PANEL_URL = "weatherdesk"
+PANEL_URL = "stormdesk"

@@ -34,11 +34,11 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
-from .entity import WeatherDeskEntity
+from .entity import StormDeskEntity
 
 
 @dataclass(frozen=True, kw_only=True)
-class WeatherDeskSensor(SensorEntityDescription):
+class StormDeskSensor(SensorEntityDescription):
     """A reading, and where to find it in the payload."""
 
     field: str
@@ -46,68 +46,68 @@ class WeatherDeskSensor(SensorEntityDescription):
 
 MEASURE = SensorStateClass.MEASUREMENT
 
-SENSORS: tuple[WeatherDeskSensor, ...] = (
-    WeatherDeskSensor(
+SENSORS: tuple[StormDeskSensor, ...] = (
+    StormDeskSensor(
         key="temp", field="temp", translation_key="temp",
         device_class=SensorDeviceClass.TEMPERATURE, state_class=MEASURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="feels_like", field="feels_like", translation_key="feels_like",
         device_class=SensorDeviceClass.TEMPERATURE, state_class=MEASURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="humidity", field="humidity", translation_key="humidity",
         device_class=SensorDeviceClass.HUMIDITY, state_class=MEASURE,
         native_unit_of_measurement=PERCENTAGE,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="pressure", field="pressure", translation_key="pressure",
         device_class=SensorDeviceClass.ATMOSPHERIC_PRESSURE, state_class=MEASURE,
         native_unit_of_measurement=UnitOfPressure.HPA,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="pressure_trend", field="pressure_trend", translation_key="pressure_trend",
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="wind_avg", field="wind_avg", translation_key="wind_avg",
         device_class=SensorDeviceClass.WIND_SPEED, state_class=MEASURE,
         native_unit_of_measurement=UnitOfSpeed.METERS_PER_SECOND,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="wind_gust", field="wind_gust", translation_key="wind_gust",
         device_class=SensorDeviceClass.WIND_SPEED, state_class=MEASURE,
         native_unit_of_measurement=UnitOfSpeed.METERS_PER_SECOND,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="wind_lull", field="wind_lull", translation_key="wind_lull",
         device_class=SensorDeviceClass.WIND_SPEED, state_class=MEASURE,
         native_unit_of_measurement=UnitOfSpeed.METERS_PER_SECOND,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="wind_dir", field="wind_dir", translation_key="wind_dir",
         state_class=MEASURE, native_unit_of_measurement=DEGREE,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="uv", field="uv", translation_key="uv", state_class=MEASURE,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="solar", field="solar", translation_key="solar",
         device_class=SensorDeviceClass.IRRADIANCE, state_class=MEASURE,
         native_unit_of_measurement=UnitOfIrradiance.WATTS_PER_SQUARE_METER,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="lux", field="lux", translation_key="lux",
         device_class=SensorDeviceClass.ILLUMINANCE, state_class=MEASURE,
         native_unit_of_measurement=LIGHT_LUX,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="rain", field="rain", translation_key="rain",
         device_class=SensorDeviceClass.PRECIPITATION, state_class=MEASURE,
         native_unit_of_measurement=UnitOfPrecipitationDepth.MILLIMETERS,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="day_rain", field="day_rain", translation_key="day_rain",
         device_class=SensorDeviceClass.PRECIPITATION,
         # Resets at local midnight, which is exactly what total_increasing is for — the statistics
@@ -115,15 +115,15 @@ SENSORS: tuple[WeatherDeskSensor, ...] = (
         state_class=SensorStateClass.TOTAL_INCREASING,
         native_unit_of_measurement=UnitOfPrecipitationDepth.MILLIMETERS,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="strikes", field="strikes", translation_key="strikes", state_class=MEASURE,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="strike_dist", field="strike_dist", translation_key="strike_dist",
         device_class=SensorDeviceClass.DISTANCE, state_class=MEASURE,
         native_unit_of_measurement=UnitOfLength.KILOMETERS,
     ),
-    WeatherDeskSensor(
+    StormDeskSensor(
         key="battery", field="battery", translation_key="battery",
         device_class=SensorDeviceClass.VOLTAGE, state_class=MEASURE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
@@ -140,16 +140,16 @@ async def async_setup_entry(
     # Only what this station reports. An Ecowitt has no lightning sensor, and thirteen entities
     # permanently showing "unknown" is how an integration earns a reputation.
     async_add_entities(
-        WeatherDeskSensorEntity(coordinator, description)
+        StormDeskSensorEntity(coordinator, description)
         for description in SENSORS
         if current.get(description.field) is not None
     )
 
 
-class WeatherDeskSensorEntity(WeatherDeskEntity, SensorEntity):
-    entity_description: WeatherDeskSensor
+class StormDeskSensorEntity(StormDeskEntity, SensorEntity):
+    entity_description: StormDeskSensor
 
-    def __init__(self, coordinator, description: WeatherDeskSensor) -> None:
+    def __init__(self, coordinator, description: StormDeskSensor) -> None:
         super().__init__(coordinator)
         self.entity_description = description
         self._attr_unique_id = f"{coordinator.station_id or coordinator.host}_{description.key}"

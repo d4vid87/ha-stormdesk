@@ -1,6 +1,6 @@
-# WeatherDesk for Home Assistant
+# StormDesk for Home Assistant
 
-A custom integration for [WeatherDesk](https://github.com/d4vid87/weatherdesk) — a self-hosted
+A custom integration for [StormDesk](https://github.com/d4vid87/stormdesk) — a self-hosted
 dashboard for your own weather station.
 
 Polls the dashboard's `/api/v1` over your LAN. No cloud, no account, no broker.
@@ -9,9 +9,9 @@ Polls the dashboard's `/api/v1` over your LAN. No cloud, no account, no broker.
 
 Not necessarily, and it is worth being clear about that.
 
-WeatherDesk already publishes to Home Assistant over MQTT, with discovery, and that path needs no
+StormDesk already publishes to Home Assistant over MQTT, with discovery, and that path needs no
 custom code at all. If you have a broker, start there — it is in the
-[WeatherDesk docs](https://github.com/d4vid87/weatherdesk/blob/main/docs/homeassistant.md).
+[StormDesk docs](https://github.com/d4vid87/stormdesk/blob/main/docs/homeassistant.md).
 
 Install this integration if:
 
@@ -25,19 +25,19 @@ Running both is fine. They are separate devices and neither writes to the other'
 
 ## Install
 
-**HACS** → Integrations → ⋮ → Custom repositories → `d4vid87/ha-weatherdesk`, category
+**HACS** → Integrations → ⋮ → Custom repositories → `d4vid87/ha-stormdesk`, category
 *Integration* → Install → restart Home Assistant.
 
-**By hand** → copy `custom_components/weatherdesk` into your `config/custom_components/` →
+**By hand** → copy `custom_components/stormdesk` into your `config/custom_components/` →
 restart.
 
 ## Set up
 
-WeatherDesk announces itself on the LAN, so Home Assistant usually offers it under
+StormDesk announces itself on the LAN, so Home Assistant usually offers it under
 **Settings → Devices & Services** without being asked. Accept it and you are done.
 
 If it doesn't appear — a dashboard on another subnet, or a container without host networking,
-where mDNS doesn't carry — add it by hand: **Add Integration → WeatherDesk**, then the address you
+where mDNS doesn't carry — add it by hand: **Add Integration → StormDesk**, then the address you
 open in a browser (`192.168.1.20:8088`, or with a scheme if it isn't plain http).
 
 The address has to be the dashboard's own server. A static copy of the page served by nginx has
@@ -58,7 +58,7 @@ deliberate: a units switch on the dashboard must never rewrite months of Home As
 `Rain today` is a `total_increasing` sensor, so its reset at local midnight reads as a new day
 rather than as a meter running backwards.
 
-There is also a **WeatherDesk** entry in the sidebar, framing the dashboard itself. Hide it the way
+There is also a **StormDesk** entry in the sidebar, framing the dashboard itself. Hide it the way
 you hide any sidebar item — long-press the Home Assistant logo — if you would rather not have it.
 An iframe rather than a custom Lovelace card on purpose: the dashboard is a whole application with
 its own layout engine, and reimplementing part of it as a card would be two things to keep in step.
@@ -75,14 +75,14 @@ loop.
 
 ## Blueprints
 
-Three importable automations ship with WeatherDesk itself:
-[`blueprints/automation/weatherdesk`](https://github.com/d4vid87/weatherdesk/tree/main/blueprints/automation/weatherdesk).
+Three importable automations ship with StormDesk itself:
+[`blueprints/automation/stormdesk`](https://github.com/d4vid87/stormdesk/tree/main/blueprints/automation/stormdesk).
 They are written against the MQTT sensors; point them at these entities instead if that is the
 route you took.
 
 ## Troubleshooting
 
-**"Nothing at that address answered as a WeatherDesk."** Open `http://<address>/api/v1` in a
+**"Nothing at that address answered as a StormDesk."** Open `http://<address>/api/v1` in a
 browser. You should get JSON starting `{"api":1`. If you get the dashboard's HTML, the address is
 right but you are on a static host with no server behind it. If you get nothing, it's the address.
 
@@ -96,4 +96,4 @@ entity under the entity's settings if you want a different one.
 
 ## Licence
 
-MIT, same as WeatherDesk.
+MIT, same as StormDesk.

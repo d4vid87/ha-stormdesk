@@ -27,7 +27,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
-from .entity import WeatherDeskEntity
+from .entity import StormDeskEntity
 
 # WMO code to the condition names Home Assistant draws. Two codes map to `partlycloudy` and three
 # to `rainy`; the table is the one open-meteo publishes, not a guess.
@@ -48,10 +48,10 @@ WMO: dict[int, str] = {
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    async_add_entities([WeatherDeskWeather(hass.data[DOMAIN][entry.entry_id])])
+    async_add_entities([StormDeskWeather(hass.data[DOMAIN][entry.entry_id])])
 
 
-class WeatherDeskWeather(WeatherDeskEntity, WeatherEntity):
+class StormDeskWeather(StormDeskEntity, WeatherEntity):
     _attr_name = None  # the device's own name is the entity's name
     _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_native_pressure_unit = UnitOfPressure.HPA

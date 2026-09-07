@@ -3,21 +3,21 @@
     "flow_title": "{name}",
     "step": {
       "user": {
-        "title": "WeatherDesk",
+        "title": "StormDesk",
         "description": "The address of the dashboard — the same one you open in a browser.",
         "data": { "host": "Address" }
       },
       "confirm": {
-        "title": "WeatherDesk",
+        "title": "StormDesk",
         "description": "Add {name}?"
       }
     },
     "error": {
-      "cannot_connect": "Nothing at that address answered as a WeatherDesk. Check the address, and that this is the dashboard's own server rather than a static copy of the page."
+      "cannot_connect": "Nothing at that address answered as a StormDesk. Check the address, and that this is the dashboard's own server rather than a static copy of the page."
     },
     "abort": {
       "already_configured": "This station is already set up.",
-      "cannot_connect": "Nothing at that address answered as a WeatherDesk."
+      "cannot_connect": "Nothing at that address answered as a StormDesk."
     }
   },
   "entity": {
